@@ -1,6 +1,7 @@
 
 # Created by https://www.gitignore.io/api/macos
 *.out
+*.o
 
 ### macOS ###
 *.DS_Store
