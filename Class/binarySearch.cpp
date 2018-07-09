@@ -1,34 +1,23 @@
-#include <iostream>
-#include <vector>
-using namespace std;
+#include <stdio.h>
 
-template <typename T>
-int binarySearch(vector<T> array, const T &key, int size) {
-    int start = 0;
-    int end = size;
-    int middle = (start + end) / 2;
-    while (start <= end) {
-        if (array[middle] == key) {
+int BinarySearch(int a[], int x, int size) {
+    int left = 0;
+    int right = size - 1;
+    while (left <= right) {
+        int middle = (left + right) / 2;
+        if(a[middle] == x) 
             return middle;
-        }
-        if (array[middle] > key) {
-            end = middle - 1;
-            middle = (start + end) / 2;
-        } else {
-            start = middle + 1;
-            middle = (start + end) / 2;
-        }
+        if(a[middle] > x) 
+            right = middle-1;
+        else 
+            left = middle +1;
     }
-    return start;
+    return -1;
 }
 
 int main() {
-    vector<char> A = {'a', 'b', 'g', 'w'};
-    int index = binarySearch(A, 'h', A.size());
-    if (index != -1) {
-        cout << "Not found." << endl;
-    } else {
-        cout << "Index: " << index << endl;
-    }
+    int a[] = {0, 2, 5, 6, 8, 123, 5345, 65345};
+    int index = BinarySearch(a, 123, sizeof(a) / sizeof(int));
+    printf("%d", index);
     return 0;
 }

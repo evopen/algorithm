@@ -1,19 +1,21 @@
-#include <iostream>
-using namespace std;
+#include <stdio.h>
 
-void MatrixChain(int *matrixChain, int chainSize, int **complexityMatrix, int **breakPointMatrix) {
-    for (int i = 1; i <= chainSize; i++) 
-        complexityMatrix[i][i] = 0;
-    for (int offset = 2; offset <= chainSize; offset++) {
-        for (int head = 1; head <= chainSize - offset + 1; head++) {
-            int tail = head + offset - 1;
+void MatrixChain(int *matrix, int count, int **complexityMatrix,
+                 int **breakPointMatrix) {
+    for (int i = 1; i <= count; i++) complexityMatrix[i][i] = 0;
+    for (int chainLength = 2; chainLength <= count; chainLength++) {
+        for (int head = 1; head <= count - chainLength + 1; head++) {
+            int tail = head + chainLength - 1;
             // Initialize complexityMatrix breakpoint to the first matrix
-            complexityMatrix[head][tail] = complexityMatrix[head + 1][tail] +
-                matrixChain[head - 1] * matrixChain[head] * matrixChain[tail];
+            complexityMatrix[head][tail] =
+                complexityMatrix[head + 1][tail] +
+                matrix[head - 1] * matrix[head] * matrix[tail];
             breakPointMatrix[head][tail] = head;
             for (int breakPoint = head + 1; breakPoint < tail; breakPoint++) {
-                int complexity = complexityMatrix[head][breakPoint] + complexityMatrix[breakPoint + 1][tail] +
-                                   matrixChain[head - 1] * matrixChain[breakPoint] * matrixChain[tail];
+                int complexity =
+                    complexityMatrix[head][breakPoint] +
+                    complexityMatrix[breakPoint + 1][tail] +
+                    matrix[head - 1] * matrix[breakPoint] * matrix[tail];
                 if (complexity < complexityMatrix[head][tail]) {
                     complexityMatrix[head][tail] = complexity;
                     breakPointMatrix[head][tail] = breakPoint;
@@ -32,13 +34,13 @@ int main() {
         complexityMatrix[i] = new int[matrixCount];
         breakPointMatrix[i] = new int[matrixCount];
     }
-    MatrixChain(matrixColumnSize, matrixCount, complexityMatrix, breakPointMatrix);
+    MatrixChain(matrixColumnSize, matrixCount, complexityMatrix,
+                breakPointMatrix);
     for (int i = 1; i <= matrixCount; i++) {
-        for (int tab = 1; tab < i; tab++)
-            cout << "\t";
-        for (int j = i; j <= matrixCount; j++) 
-            cout << complexityMatrix[i][j] << "\t";
-        cout << endl;
+        for (int tab = 1; tab < i; tab++) printf("        ");
+        for (int j = i; j <= matrixCount; j++)
+            printf("%8d", complexityMatrix[i][j]);
+        printf("\n");
     }
     return 0;
 }

@@ -1,19 +1,25 @@
-#include <iostream>
-using namespace std;
+#include <stdio.h>
 
 void merge(int *a, int *b, int first, int mid, int last) {
     int i = first;
     int j = mid + 1;
     int k = first;
-    while (i <= mid && j <= last)
-        if (a[i] <= a[j])
+    while (i <= mid && j <= last) {
+        if (a[i] <= a[j]) {
             b[k++] = a[i++];
-        else
+        } else {
             b[k++] = a[j++];
-    if (i > mid)
-        for (int t = j; t <= last; ++t) b[k++] = a[t];
-    else
-        for (int t = i; t <= mid; ++t) b[k++] = a[t];
+        }
+    }
+    if (i == mid + 1) {
+        while (j <= last) {
+            b[k++] = a[j++];
+        }
+    } else {
+        while (i <= mid) {
+            b[k++] = a[i++];
+        }
+    }
 }
 
 inline void copy(int *a, int *b, int first, int last) {
@@ -36,7 +42,7 @@ int main() {
     int s[] = {12, 7, 3, 9, 15, 8, 1};
     mergeSort(s, 0, 6);
     for (int i = 0; i < length; i++) {
-        cout << s[i] << " ";
+        printf("%d ", s[i]);
     }
     return 0;
 }
