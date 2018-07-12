@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+void Swap(int ,int);
+
 class Traveling {
     int n, *x, *bestx;
     int **a, cc, bestc, NoEdge;
@@ -14,11 +16,16 @@ class Traveling {
                 bestc = cc + a[x[n - 1]][x[n]] + a[x[n]][1];
             }
         } else {
-            Swap(x[i], x[j]);
-            cc += a[x[i-1]][x[i]];
-            Backtrack(i+1);
-            cc-=a[x[i-1]][x[i]];
-            Swap(x[i], x[j]);
+            for (int j = i; j <= n; j++) {
+                if (a[x[i - 1]][x[j]] != NoEdge &&
+                    (cc + a[x[i - 1]][x[j]] > bestc || bestc == NoEdge)) {
+                    Swap(x[i], x[j]);
+                    cc += a[x[i - 1]][x[i]];
+                    Backtrack(i + 1);
+                    cc -= a[x[i - 1]][x[i]];
+                    Swap(x[i], x[j]);
+                }
+            }
         }
     }
-}
+};

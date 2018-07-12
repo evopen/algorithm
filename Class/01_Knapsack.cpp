@@ -68,7 +68,7 @@ void backtrack(int i) {
         cw -= w[i];
         cp -= v[i];
     }
-    if (bound(i + 1) > bestp)  //符合条件搜索右子数
+    if (bound(i + 1) > bestp)  //符合条件搜索右子树
         backtrack(i + 1);
 }
 
